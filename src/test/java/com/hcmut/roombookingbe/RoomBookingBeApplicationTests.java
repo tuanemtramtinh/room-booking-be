@@ -1,0 +1,13 @@
+package com.hcmut.roombookingbe;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class RoomBookingBeApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
