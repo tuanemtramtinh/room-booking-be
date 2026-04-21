@@ -21,7 +21,7 @@ public class BookingController {
 
     private final BookingService bookingService;
 
-    @PostMapping({"", "/"})
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookingDTO createBooking(@Valid @RequestBody CreateBookingRequestDTO request) {
         return bookingService.createBooking(request);
