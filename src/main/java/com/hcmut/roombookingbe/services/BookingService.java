@@ -25,7 +25,7 @@ public class BookingService {
 
     @Transactional
     public BookingDTO createBooking(CreateBookingRequestDTO request) {
-        validateBookingTime(request);
+        validateBookingSchedule(request);
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResponseStatusException(
@@ -41,18 +41,19 @@ public class BookingService {
         booking.setTitle(request.getTitle().trim());
         booking.setDescription(request.getDescription());
         booking.setAttendeeCount(request.getAttendeeCount());
-        booking.setStartTime(request.getStartTime());
-        booking.setEndTime(request.getEndTime());
+        booking.setStartDate(request.getStartDate());
+        booking.setStartHour(request.getStartHour());
+        booking.setEndHour(request.getEndHour());
         booking.setStatus(BookingStatus.PENDING);
 
         Booking savedBooking = bookingRepository.save(booking);
         return toDTO(savedBooking);
     }
 
-    private void validateBookingTime(CreateBookingRequestDTO request) {
-        if (!request.getStartTime().isBefore(request.getEndTime())) {
+    private void validateBookingSchedule(CreateBookingRequestDTO request) {
+        if (!request.getStartHour().isBefore(request.getEndHour())) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "startTime must be before endTime");
+                    HttpStatus.BAD_REQUEST, "startHour must be before endHour");
         }
     }
 
@@ -64,8 +65,9 @@ public class BookingService {
                 .title(booking.getTitle())
                 .description(booking.getDescription())
                 .attendeeCount(booking.getAttendeeCount())
-                .startTime(booking.getStartTime())
-                .endTime(booking.getEndTime())
+                .startDate(booking.getStartDate())
+                .startHour(booking.getStartHour())
+                .endHour(booking.getEndHour())
                 .status(booking.getStatus())
                 .rejectReason(booking.getRejectReason())
                 .reviewedAt(booking.getReviewedAt())

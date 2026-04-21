@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -21,8 +23,9 @@ public class BookingDTO {
     private String title;
     private String description;
     private Integer attendeeCount;
-    private Instant startTime;
-    private Instant endTime;
+    private LocalDate startDate;
+    private LocalTime startHour;
+    private LocalTime endHour;
     private BookingStatus status;
     private String rejectReason;
     private Instant reviewedAt;

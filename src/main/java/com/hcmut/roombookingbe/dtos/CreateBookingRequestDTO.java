@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -27,8 +28,11 @@ public class CreateBookingRequestDTO {
     private Integer attendeeCount;
 
     @NotNull
-    private Instant startTime;
+    private LocalDate startDate;
 
     @NotNull
-    private Instant endTime;
+    private LocalTime startHour;
+
+    @NotNull
+    private LocalTime endHour;
 }
