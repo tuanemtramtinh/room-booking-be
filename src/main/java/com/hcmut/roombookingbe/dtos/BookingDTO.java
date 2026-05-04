@@ -1,5 +1,6 @@
 package com.hcmut.roombookingbe.dtos;
 
+import com.hcmut.roombookingbe.dtos.response.UserResponse;
 import com.hcmut.roombookingbe.enums.BookingStatus;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class BookingDTO {
 
   private Long id;
   private Long userId;
+  private UserResponse requester;
   private Long roomId;
   private String title;
   private String description;

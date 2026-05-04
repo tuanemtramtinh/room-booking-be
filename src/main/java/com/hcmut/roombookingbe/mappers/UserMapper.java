@@ -7,8 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-
-    @Mapping(target = "role", expression = "java(user.getRole().name())")
-    @Mapping(target = "status", expression = "java(user.getStatus().name())")
-    UserResponse toUserResponse(User user);
+  @Mapping(target = "role", expression = "java(user.getRole().name())")
+  @Mapping(target = "status", expression = "java(user.getStatus().name())")
+  UserResponse toUserResponse(User user);
 }

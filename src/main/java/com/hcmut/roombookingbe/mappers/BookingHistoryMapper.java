@@ -7,8 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface BookingHistoryMapper {
-
-    @Mapping(target = "bookingId", source = "booking.id")
-    @Mapping(target = "changedBy", source = "changedBy.id")
-    BookingHistoryDTO toDTO(BookingHistory bookingHistory);
+  @Mapping(target = "bookingId", source = "booking.id")
+  @Mapping(target = "changedBy", source = "changedBy.id")
+  BookingHistoryDTO toDTO(BookingHistory bookingHistory);
 }

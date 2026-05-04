@@ -15,15 +15,21 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class AuthController {
 
-    private final AuthService authService;
+  private final AuthService authService;
 
-    @PostMapping("/google")
-    public ResponseEntity<AuthResponse> googleLogin(@Valid @RequestBody GoogleLoginRequest request) {
-        return ResponseEntity.ok(authService.loginWithGoogle(request.idToken()));
-    }
+  @PostMapping("/google")
+  public ResponseEntity<AuthResponse> googleLogin(
+    @Valid @RequestBody GoogleLoginRequest request
+  ) {
+    return ResponseEntity.ok(authService.loginWithGoogle(request.idToken()));
+  }
 
-    @PostMapping("/admin")
-    public ResponseEntity<AuthResponse> adminLogin(@Valid @RequestBody AdminLoginRequest request) {
-        return ResponseEntity.ok(authService.loginAsAdmin(request.email(), request.password()));
-    }
+  @PostMapping("/admin")
+  public ResponseEntity<AuthResponse> adminLogin(
+    @Valid @RequestBody AdminLoginRequest request
+  ) {
+    return ResponseEntity.ok(
+      authService.loginAsAdmin(request.email(), request.password())
+    );
+  }
 }

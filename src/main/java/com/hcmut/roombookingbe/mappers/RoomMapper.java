@@ -10,5 +10,7 @@ public interface RoomMapper {
   RoomDTO toRoomDTO(Room room);
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "createdAt", ignore = true)
+  @Mapping(target = "updatedAt", ignore = true)
   Room toRoom(RoomDTO roomDTO);
 }

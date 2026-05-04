@@ -7,12 +7,11 @@ import com.hcmut.roombookingbe.entities.User;
 import com.hcmut.roombookingbe.enums.BookingStatus;
 import com.hcmut.roombookingbe.services.BookingService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -20,40 +19,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingController {
 
-    private final BookingService bookingService;
+  private final BookingService bookingService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public BookingDTO createBooking(@Valid @RequestBody CreateBookingRequestDTO request, Authentication authentication) {
-        User currentUser = (User) authentication.getPrincipal();
-        return bookingService.createBooking(request, currentUser);
-    }
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public BookingDTO createBooking(
+    @Valid @RequestBody CreateBookingRequestDTO request,
+    Authentication authentication
+  ) {
+    User currentUser = (User) authentication.getPrincipal();
+    return bookingService.createBooking(request, currentUser);
+  }
 
-    @GetMapping
-    public List<BookingDTO> getBookings(
-            @RequestParam(required = false) BookingStatus status,
-            Authentication authentication) {
-        return bookingService.getBookings(status);
-    }
+  @GetMapping
+  public List<BookingDTO> getBookings(
+    @RequestParam(required = false) BookingStatus status,
+    Authentication authentication
+  ) {
+    return bookingService.getBookings(status);
+  }
 
-    @PutMapping("/{id}/approve")
-    public BookingDTO approveBooking(@PathVariable Long id, Authentication authentication) {
-        User admin = (User) authentication.getPrincipal();
-        return bookingService.approveBooking(id, admin);
-    }
+  @PutMapping("/{id}/approve")
+  public BookingDTO approveBooking(
+    @PathVariable Long id,
+    Authentication authentication
+  ) {
+    User admin = (User) authentication.getPrincipal();
+    return bookingService.approveBooking(id, admin);
+  }
 
-    @PutMapping("/{id}/reject")
-    public BookingDTO rejectBooking(
-            @PathVariable Long id,
-            @RequestBody ReviewBookingRequest request,
-            Authentication authentication) {
-        User admin = (User) authentication.getPrincipal();
-        return bookingService.rejectBooking(id, admin, request.rejectReason());
-    }
+  @PutMapping("/{id}/reject")
+  public BookingDTO rejectBooking(
+    @PathVariable Long id,
+    @RequestBody ReviewBookingRequest request,
+    Authentication authentication
+  ) {
+    User admin = (User) authentication.getPrincipal();
+    return bookingService.rejectBooking(id, admin, request.rejectReason());
+  }
 
-    @GetMapping("/history")
-    public List<BookingDTO> getBookingHistory(Authentication authentication) {
-        User currentUser = (User) authentication.getPrincipal();
-        return bookingService.getBookingsByUser(currentUser.getId());
-    }
+  @GetMapping("/history")
+  public List<BookingDTO> getBookingHistory(Authentication authentication) {
+    User currentUser = (User) authentication.getPrincipal();
+    return bookingService.getBookingsByUser(currentUser.getId());
+  }
 }

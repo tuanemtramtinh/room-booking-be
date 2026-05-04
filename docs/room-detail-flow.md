@@ -32,6 +32,14 @@ Authorization: Bearer <accessToken>
     {
       "id": 5,
       "userId": 1,
+      "requester": {
+        "id": 1,
+        "email": "nguyen.van.a@hcmut.edu.vn",
+        "fullName": "Nguyễn Văn A",
+        "avatarUrl": "https://lh3.googleusercontent.com/...",
+        "role": "STAFF",
+        "status": "ACTIVE"
+      },
       "roomId": 2,
       "title": "Họp nhóm dự án",
       "description": "Review sprint 3",
@@ -106,18 +114,30 @@ Frontend                  Backend                    Database
 
 ### Booking (trong mảng `bookings`)
 
-| Field          | Kiểu      | Mô tả                                                          |
-|----------------|-----------|----------------------------------------------------------------|
-| `id`           | `Long`    | ID booking                                                     |
-| `userId`       | `Long`    | ID user đặt phòng                                              |
-| `title`        | `String`  | Tiêu đề buổi họp                                               |
-| `startDate`    | `String`  | Ngày đặt. Format: `yyyy-MM-dd`                                 |
-| `startHour`    | `String`  | Giờ bắt đầu. Format: `HH:mm:ss`                               |
-| `endHour`      | `String`  | Giờ kết thúc. Format: `HH:mm:ss`                              |
-| `status`       | `String`  | `PENDING` / `APPROVED` / `REJECTED` / `CANCELLED`             |
-| `rejectReason` | `String`  | Lý do từ chối — `null` nếu không bị từ chối                   |
-| `reviewedBy`   | `Long`    | ID admin xét duyệt — `null` nếu chưa duyệt                    |
-| `reviewedAt`   | `Instant` | Thời điểm xét duyệt (UTC) — `null` nếu chưa duyệt             |
+| Field          | Kiểu        | Mô tả                                                          |
+|----------------|-------------|----------------------------------------------------------------|
+| `id`           | `Long`      | ID booking                                                     |
+| `userId`       | `Long`      | ID user đặt phòng                                              |
+| `requester`    | `Object`    | Thông tin đầy đủ của người đặt phòng (xem bảng bên dưới)      |
+| `title`        | `String`    | Tiêu đề buổi họp                                               |
+| `startDate`    | `String`    | Ngày đặt. Format: `yyyy-MM-dd`                                 |
+| `startHour`    | `String`    | Giờ bắt đầu. Format: `HH:mm:ss`                               |
+| `endHour`      | `String`    | Giờ kết thúc. Format: `HH:mm:ss`                              |
+| `status`       | `String`    | `PENDING` / `APPROVED` / `REJECTED` / `CANCELLED`             |
+| `rejectReason` | `String`    | Lý do từ chối — `null` nếu không bị từ chối                   |
+| `reviewedBy`   | `Long`      | ID admin xét duyệt — `null` nếu chưa duyệt                    |
+| `reviewedAt`   | `Instant`   | Thời điểm xét duyệt (UTC) — `null` nếu chưa duyệt             |
+
+### `requester` object
+
+| Field       | Kiểu     | Mô tả                          |
+|-------------|----------|--------------------------------|
+| `id`        | `Long`   | ID của user                    |
+| `email`     | `String` | Email                          |
+| `fullName`  | `String` | Tên đầy đủ                     |
+| `avatarUrl` | `String` | URL ảnh đại diện               |
+| `role`      | `String` | `ADMIN` hoặc `STAFF`           |
+| `status`    | `String` | `ACTIVE` hoặc `INACTIVE`       |
 
 ---
 
