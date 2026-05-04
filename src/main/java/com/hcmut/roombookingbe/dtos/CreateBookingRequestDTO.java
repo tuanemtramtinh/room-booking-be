@@ -14,9 +14,6 @@ import java.time.LocalTime;
 public class CreateBookingRequestDTO {
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long roomId;
 
     @NotBlank

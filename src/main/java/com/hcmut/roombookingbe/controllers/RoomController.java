@@ -1,6 +1,7 @@
 package com.hcmut.roombookingbe.controllers;
 
 import com.hcmut.roombookingbe.dtos.RoomDTO;
+import com.hcmut.roombookingbe.dtos.RoomDetailDTO;
 import com.hcmut.roombookingbe.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,11 @@ public class RoomController {
     @GetMapping
     public ResponseEntity<List<RoomDTO>> getAllRooms() {
         return ResponseEntity.ok(roomService.getAllRooms());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RoomDetailDTO> getRoomDetail(@PathVariable Long id) {
+        return ResponseEntity.ok(roomService.getRoomDetail(id));
     }
 
     @PostMapping

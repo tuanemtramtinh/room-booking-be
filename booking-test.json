@@ -1,9 +1,0 @@
-{
-  "userId": 1,
-  "roomId": 1,
-  "title": "Test booking from terminal",
-  "description": "Created via curl",
-  "attendeeCount": 5,
-  "startTime": "2026-04-22T02:00:00Z",
-  "endTime": "2026-04-22T03:00:00Z"
-}

@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RoomMapper {
-    RoomDTO toRoomDTO(Room room);
-    
-    @Mapping(target = "id", ignore = true)
-    Room toRoom(RoomDTO roomDTO);
+  RoomDTO toRoomDTO(Room room);
+
+  @Mapping(target = "id", ignore = true)
+  Room toRoom(RoomDTO roomDTO);
 }
