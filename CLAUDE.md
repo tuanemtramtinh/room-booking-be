@@ -57,3 +57,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Database**: PostgreSQL at `103.77.241.6:6432`, database `room_booking`. `ddl-auto=update` so schema evolves with entities automatically. Credentials are hardcoded in `application.properties`.
 
 **API docs**: Swagger UI available at `/swagger-ui.html` when running.
+
+## Documentation policy
+
+After implementing any new endpoint (or modifying an existing one), create or update the corresponding `.md` file inside `docs/`. The file should describe the endpoint's purpose, request/response format, and any business rules. Frontend AI agents and developers rely on these files to understand the API surface.
