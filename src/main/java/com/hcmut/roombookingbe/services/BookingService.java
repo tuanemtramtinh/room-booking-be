@@ -11,14 +11,13 @@ import com.hcmut.roombookingbe.mappers.BookingMapper;
 import com.hcmut.roombookingbe.repositories.BookingHistoryRepository;
 import com.hcmut.roombookingbe.repositories.BookingRepository;
 import com.hcmut.roombookingbe.repositories.RoomRepository;
+import java.time.Instant;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.time.Instant;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -53,11 +52,14 @@ public class BookingService {
     booking.setEndHour(request.getEndHour());
     booking.setStatus(BookingStatus.PENDING);
 
-    if (bookingRepository.existsConflict(
-          room.getId(),
-          request.getStartDate(),
-          request.getStartHour(),
-          request.getEndHour())) {
+    if (
+      bookingRepository.existsConflict(
+        room.getId(),
+        request.getStartDate(),
+        request.getStartHour().minusMinutes(15),
+        request.getEndHour().plusMinutes(15)
+      )
+    ) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,
         "Room is not available in this time slot"
@@ -71,9 +73,10 @@ public class BookingService {
   }
 
   public List<BookingDTO> getBookings(BookingStatus status) {
-    List<Booking> bookings = status != null
-      ? bookingRepository.findByStatusOrderByCreatedAtDesc(status)
-      : bookingRepository.findAllByOrderByCreatedAtDesc();
+    List<Booking> bookings =
+      status != null
+        ? bookingRepository.findByStatusOrderByCreatedAtDesc(status)
+        : bookingRepository.findAllByOrderByCreatedAtDesc();
     return bookings.stream().map(bookingMapper::toBookingDTO).toList();
   }
 
@@ -100,7 +103,11 @@ public class BookingService {
   }
 
   @Transactional
-  public BookingDTO rejectBooking(Long bookingId, User admin, String rejectReason) {
+  public BookingDTO rejectBooking(
+    Long bookingId,
+    User admin,
+    String rejectReason
+  ) {
     Booking booking = getBookingOrThrow(bookingId);
 
     if (booking.getStatus() != BookingStatus.PENDING) {
@@ -141,7 +148,13 @@ public class BookingService {
       );
   }
 
-  private void saveHistory(Booking booking, BookingStatus from, BookingStatus to, User changedBy, String note) {
+  private void saveHistory(
+    Booking booking,
+    BookingStatus from,
+    BookingStatus to,
+    User changedBy,
+    String note
+  ) {
     BookingHistory history = new BookingHistory();
     history.setBooking(booking);
     history.setFromStatus(from);
