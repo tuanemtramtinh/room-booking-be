@@ -61,4 +61,20 @@ public class RoomService {
     Room savedRoom = roomRepository.save(room);
     return roomMapper.toRoomDTO(savedRoom);
   }
+
+  public RoomDTO updateRoom(Long id, RoomDTO roomDTO) {
+    Room room = roomRepository
+      .findById(id)
+      .orElseThrow(() ->
+        new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found with id: " + id)
+      );
+
+    if (roomDTO.getName() != null) room.setName(roomDTO.getName());
+    if (roomDTO.getLocation() != null) room.setLocation(roomDTO.getLocation());
+    if (roomDTO.getCapacity() != null) room.setCapacity(roomDTO.getCapacity());
+    if (roomDTO.getDescription() != null) room.setDescription(roomDTO.getDescription());
+    if (roomDTO.getStatus() != null) room.setStatus(roomDTO.getStatus());
+
+    return roomMapper.toRoomDTO(roomRepository.save(room));
+  }
 }

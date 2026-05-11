@@ -30,4 +30,12 @@ public class RoomController {
   public ResponseEntity<RoomDTO> createRoom(@RequestBody RoomDTO roomDTO) {
     return ResponseEntity.ok(roomService.createRoom(roomDTO));
   }
+
+  @PatchMapping("/{id}")
+  public ResponseEntity<RoomDTO> updateRoom(
+    @PathVariable Long id,
+    @RequestBody RoomDTO roomDTO
+  ) {
+    return ResponseEntity.ok(roomService.updateRoom(id, roomDTO));
+  }
 }
